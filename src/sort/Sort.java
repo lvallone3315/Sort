@@ -38,7 +38,7 @@ public class Sort {
         for (int loop = 0; loop < MAX_SIZE; loop++) {
             System.out.printf("%d ", inputArray[loop]);
         }
-        System.out.println();
+        System.out.printf("\n\n");
         
         // Sort array in place
         int temp = 0;
