@@ -9,7 +9,9 @@
  *     Print each iteration of bubblesort
  *   Print stats
  *
- * Add version string
+ * version 0.2 
+ *   refactored stats to separate class
+ *   in prep for auto Junit testing create & call a sort method (in main)
  */
 package sort;
 
@@ -22,7 +24,7 @@ import java.util.Random;
  */
 public class Sort {
 
-    final static String VERSION = "Sort version 0.1";
+    final static String VERSION = "Sort version 0.2";
 
     /**
      * @param args the command line arguments
@@ -31,50 +33,60 @@ public class Sort {
         System.out.printf("%s\n\n", VERSION);
         System.out.println("Sort Me!");
         
-        // Stat tracking
-        //   ifCount = reads
-        //   swapCount = writes
-        int ifCount = 0;
-        int swapCount = 0;
-        
         // Generate random set of integers
         final int MAX_SIZE = 20;
         int[] sortArray = new int[MAX_SIZE];
-        
+         
         Random rand = new Random();
                     
         for (int loop = 0; loop < MAX_SIZE; loop++) {
             sortArray[loop] = rand.nextInt(1000);
         }
         
-        // Print input array
+
+        // Array sorted in place
+        //   using MAX_SIZE for print, rather than .length to verify
+        sort (sortArray);
+        
         for (int loop = 0; loop < MAX_SIZE; loop++) {
-            System.out.printf("%d ", sortArray[loop]);
+                System.out.printf("%d ", sortArray[loop]);
+        }
+        System.out.println();
+
+    } 
+    
+    public static int[] sort(int[] array) {
+        
+                // Stat tracking
+        SortStats stats = new SortStats();
+        stats.setArraySize(array.length);
+                // Print input array
+        for (int loop = 0; loop < array.length; loop++) {
+            System.out.printf("%d ", array[loop]);
         }
         System.out.printf("\n\n");
         
         // Sort array in place
         int temp = 0;
-        for (int outerLoop = 0; outerLoop < MAX_SIZE-1; outerLoop++){
-            for (int innerLoop = 0; innerLoop < MAX_SIZE-outerLoop-1; innerLoop++) {
-                if (sortArray[innerLoop] > sortArray[innerLoop+1]) {
+        for (int outerLoop = 0; outerLoop < array.length-1; outerLoop++){
+            for (int innerLoop = 0; innerLoop < array.length-outerLoop-1; innerLoop++) {
+                if (array[innerLoop] > array[innerLoop+1]) {
                       // swap elements
-                    temp = sortArray[innerLoop];
-                    sortArray[innerLoop] = sortArray[innerLoop+1];
-                    sortArray[innerLoop+1] = temp;
-                    swapCount++;  // write count
+                    temp = array[innerLoop];
+                    array[innerLoop] = array[innerLoop+1];
+                    array[innerLoop+1] = temp;
+                    stats.incrementNumWrites();  // write count
                 }
-                ifCount++;  // read count
+                stats.incrementNumReads();  // read count
             }
             // print array after this iteration - one element "bubbles" down
-            for (int loop = 0; loop < MAX_SIZE; loop++) {
-                System.out.printf("%d ", sortArray[loop]);
+            for (int loop = 0; loop < array.length; loop++) {
+                System.out.printf("%d ", array[loop]);
             }
             System.out.println();
         }
-        
-        // Print stats
-        System.out.printf("Array size: %d\t# reads: %d\t# writes %d\n", MAX_SIZE, ifCount, swapCount);
+                // Print stats
+        System.out.print(stats);
+        return (array);
     }
-    
 }
