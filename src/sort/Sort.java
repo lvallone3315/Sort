@@ -9,6 +9,16 @@
  *     Print each iteration of bubblesort
  *   Print stats
  *
+ * version 0.4
+ *   Moved sort code to new SortAlg class (in SortAlg.java)
+ *   In SortAlg - refactored, split out common code from sort algorithm
+ *     bubble sort in new method, intermediate prints filtered on Debug flag
+ *     sort method static -> instance
+ *   Added execution timing - both in main & in sort algorithm (tight measure)
+ *   SortStats - new statistic - execution time
+ *   Junit tests updated for all changes, executed & passed
+ *   @ToDo enhancements - add stats info for sort algorithm
+ *   
  * version 0.3
  *   added Junit tests for stats class
  * version 0.2 
@@ -26,7 +36,7 @@ import java.util.Random;
  */
 public class Sort {
 
-    final static String VERSION = "Sort version 0.3";
+    final static String VERSION = "Sort version 0.4";
 
     /**
      * @param args the command line arguments
@@ -34,6 +44,8 @@ public class Sort {
     public static void main(String[] args) {
         System.out.printf("%s\n\n", VERSION);
         System.out.println("Sort Me!");
+        
+        SortAlg sort = new SortAlg();
         
         // Generate random set of integers
         final int MAX_SIZE = 20;
@@ -44,51 +56,19 @@ public class Sort {
         for (int loop = 0; loop < MAX_SIZE; loop++) {
             sortArray[loop] = rand.nextInt(1000);
         }
-        
 
         // Array sorted in place
         //   using MAX_SIZE for print, rather than .length to verify
-        sort (sortArray);
+        long startTime = System.currentTimeMillis();
+        sort.sort (sortArray);
+        long endTime = System.currentTimeMillis();
         
         for (int loop = 0; loop < MAX_SIZE; loop++) {
                 System.out.printf("%d ", sortArray[loop]);
         }
         System.out.println();
-
+        
+        // print execution time in milliseconds
+        System.out.println("Sort Time:" + (endTime - startTime) + " milliseconds");
     } 
-    
-    public static int[] sort(int[] array) {
-        
-                // Stat tracking
-        SortStats stats = new SortStats();
-        stats.setArraySize(array.length);
-                // Print input array
-        for (int loop = 0; loop < array.length; loop++) {
-            System.out.printf("%d ", array[loop]);
-        }
-        System.out.printf("\n\n");
-        
-        // Sort array in place
-        int temp = 0;
-        for (int outerLoop = 0; outerLoop < array.length-1; outerLoop++){
-            for (int innerLoop = 0; innerLoop < array.length-outerLoop-1; innerLoop++) {
-                if (array[innerLoop] > array[innerLoop+1]) {
-                      // swap elements
-                    temp = array[innerLoop];
-                    array[innerLoop] = array[innerLoop+1];
-                    array[innerLoop+1] = temp;
-                    stats.incrementNumWrites();  // write count
-                }
-                stats.incrementNumReads();  // read count
-            }
-            // print array after this iteration - one element "bubbles" down
-            for (int loop = 0; loop < array.length; loop++) {
-                System.out.printf("%d ", array[loop]);
-            }
-            System.out.println();
-        }
-                // Print stats
-        System.out.print(stats);
-        return (array);
-    }
 }

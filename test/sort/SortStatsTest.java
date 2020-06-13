@@ -39,12 +39,26 @@ public class SortStatsTest {
     @Test
     public void testSetArraySize() {
         System.out.println("setArraySize");
-        int[] arraySize = {-1, 0, 99, 65535};
+        int[] arraySize = {-1, 0, 99, 65536};
 
         for (int loop = 0; loop < arraySize.length; loop++) {
             instance.setArraySize(arraySize[loop]);
             int expResult = instance.getArraySize();
             assertEquals(expResult, arraySize[loop]);
+        }
+    }
+        /**
+     * Test of set/getExectime method, of class SortStats.
+     */
+    @Test
+    public void testSetGetExecTime() {
+        System.out.println("setAndgetExecTime");
+        long[] execArray = {-99, 0, 199, 65536};
+
+        for (int loop = 0; loop < execArray.length; loop++) {
+            instance.setExecTime(execArray[loop]);
+            long expResult = instance.getExecTime();
+            assertEquals(expResult, execArray[loop]);
         }
     }
 
