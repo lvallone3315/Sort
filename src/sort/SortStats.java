@@ -38,6 +38,10 @@ public class SortStats {
         return numWrites;
     }
 
+    /*
+    * setArraySize
+    * @ToDo check for negative values
+    */
     public void setArraySize(int arraySize) {
         this.arraySize = arraySize;
     }

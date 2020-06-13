@@ -9,6 +9,8 @@
  *     Print each iteration of bubblesort
  *   Print stats
  *
+ * version 0.3
+ *   added Junit tests for stats class
  * version 0.2 
  *   refactored stats to separate class
  *   in prep for auto Junit testing create & call a sort method (in main)
@@ -24,7 +26,7 @@ import java.util.Random;
  */
 public class Sort {
 
-    final static String VERSION = "Sort version 0.2";
+    final static String VERSION = "Sort version 0.3";
 
     /**
      * @param args the command line arguments
