@@ -34,8 +34,8 @@ public class SortTest {
     public void testSort() {
         System.out.println("sort");
         SortAlg sort = new SortAlg();
-        int[] array = {15, 12, 6, -1, 99};
-        int[] expResult = {-1, 6, 12, 15, 99};
+        int[] array = {15, 12, 6, 101, -1, 99};
+        int[] expResult = {-1, 6, 12, 15, 99, 101};
         int[] result = sort.sort(array);
         assertArrayEquals(expResult, result);
     }
